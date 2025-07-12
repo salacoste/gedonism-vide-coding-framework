@@ -38,11 +38,11 @@ Gedonism comes preconfigured for automatic project generation using **Next.js** 
 ### How to Adapt Gedonism to Your Stack
 
 1. **Update Rule Files**
-   - Edit or replace the rules in `.cursorrules/` (e.g., `frontendrules.mdc`, `backendrules.mdc`) to reflect the conventions, best practices, and style guides of your chosen language or framework (e.g., Python, Go, Ruby, Java, React, Vue, Django, Flask, etc.).
+   - Edit or replace the rules in `.cursor/rules/` (e.g., `frontendrules.mdc`, `backendrules.mdc`) to reflect the conventions, best practices, and style guides of your chosen language or framework (e.g., Python, Go, Ruby, Java, React, Vue, Django, Flask, etc.).
    - You can add new rule files for additional stacks or remove those you don't need.
 
 2. **Modify .mdc Workflow Files**
-   - Adjust the workflow files (`01-create-prd.mdc`, `03-generate-tasks.mdc`, etc.) to reference your new or updated rules and to generate tasks/code in your target language or framework.
+   - Adjust the workflow files (`step-01-create-prd.mdc`, `step-03-generate-tasks.mdc`, etc.) to reference your new or updated rules and to generate tasks/code in your target language or framework.
    - Update prompts and instructions to guide the AI for your specific stack.
 
 3. **Adjust Project Templates and Examples**
@@ -57,6 +57,64 @@ Gedonism comes preconfigured for automatic project generation using **Next.js** 
    - Update this README and any other documentation to reflect your chosen stack, rules, and workflow.
 
 **With these simple changes, Gedonism can serve as a powerful AI-driven foundation for any language or framework.**
+
+---
+
+## Workflow: From Idea to Implemented Feature 💡➡️💻
+
+Here's the step-by-step process using the `.mdc` and rules files in this repository:
+
+### 1️⃣ Create a Product Requirement Document (PRD)
+First, lay out the blueprint for your feature. A PRD clarifies what you're building, for whom, and why.
+
+You can create a lightweight PRD directly within Cursor:
+
+- Ensure you have the `/.cursorrules/step-01-create-prd.mdc` file from this repository accessible.
+- In Cursor's Agent chat, initiate PRD creation:
+  ```
+  Use @.cursorrules/step-01-create-prd.mdc  
+  Here's the feature I want to build: [Describe your feature in detail]  
+  Reference these files to help you: [Optional: @file1.py @file2.ts]  
+  ```
+  _(Pro Tip: For complex PRDs, using MAX mode in Cursor is highly recommended if your budget allows for more comprehensive generation.)_
+
+### 2️⃣ Database Assessment (Optional)
+After creating your PRD, determine if your feature needs database functionality:
+
+- Use the database assessment prompt:
+  ```
+  Use @.cursorrules/step-02-mcp-postgres.mdc
+  Reference my PRD: @tasks/prd-MyFeature.md
+  ```
+- If you need database functionality, follow the PostgreSQL MCP setup guide in `/.cursorrules/setup-mcp-postgres.md`.
+- If not, skip to step 3.
+
+### 3️⃣ Generate Your Task List from the PRD
+With your PRD drafted (e.g., `prd-MyFeature.md`), the next step is to generate a detailed, step-by-step implementation plan for your AI Developer.
+
+- Ensure you have `/.cursorrules/step-03-generate-tasks.mdc` accessible.
+- In Cursor's Agent chat, use the PRD to create tasks:
+  ```
+  Now take @tasks/prd-MyFeature.md and create tasks using @.cursorrules/step-03-generate-tasks.mdc  
+  ```
+  _(Note: Replace `@prd-MyFeature.md` with the actual filename of the PRD you generated in step 1.)_
+
+### 4️⃣ Work Through Tasks Step-by-Step
+- Use `/.cursorrules/step-04-task-list.mdc` to instruct the AI to focus on one task at a time and wait for your go-ahead before proceeding.
+- Example:
+  ```
+  Please start on task 1.1 and use @.cursorrules/step-04-task-list.mdc
+  ```
+- Review each change, approve or request improvements, and move to the next task.
+
+---
+
+**Rules and coding standards are defined in the `/.cursor/rules/` directory:**
+- `backendrules.mdc` — for backend (NestJS, TypeScript)
+- `frontendrules.mdc` — for frontend (Next.js, Tailwind, etc.)
+- `context7autoinvoke.mdc` — for Context7 MCP integration and context management
+
+**Always reference these files in your prompts and workflow to ensure the AI follows your project's conventions and standards.**
 
 ---
 
